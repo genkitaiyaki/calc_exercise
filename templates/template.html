@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+    <style type="text/css">
+        .container {
+          display: grid;
+          grid-template-rows: auto;
+          grid-template-columns: 180px 180px 180px 180px;
+        }
+        .formula{
+          font-size: 2em;
+        }
+    </style>
+</head>
+<body>
+    <h1>{{ title }}</h1>
+    <div class="container">
+        {% for colum_num in range( MAX_COL ) %}
+        <div>
+            {% for formula in formula_columns[colum_num] %} 
+            <div class="formula">{{ formula }}</div>
+            {% endfor %}
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>
