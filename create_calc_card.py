@@ -1,5 +1,4 @@
 import random   
-from datetime import datetime as dt
 from models.formula import Formula
 from models.exercise_parts import ExerciseParts
 import jinja2
