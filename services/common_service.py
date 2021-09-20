@@ -14,14 +14,25 @@ from selenium.webdriver.support import expected_conditions as EC
 import os
 
 class CommonService():
+    """汎用的な関数をまとめたサービスクラス
+
+    現状特に縛りは設けていない
+    """
+
     def create_formulas(
         self,
         exercise_parts: ExerciseParts,
         validater: Callable,
         needs_shuffle: bool = True
         ) ->list[Formula]:
-        """
-        計算式リストを作成する
+        """計算式リストを作成する関数
+
+        演算子の左と右の数字の全ての組み合わせをexercise_partsから生成し、
+        validaterで不要な組み合わせを除外することで計算式リストを生成する
+
+        計算式リストはデフォルトで順番がランダムになるが、
+        引数を指定することでランダムにしないことも可能
+        
         """
 
         formulas: list[str] = []
