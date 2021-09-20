@@ -5,6 +5,7 @@ from itertools import product
 from typing import Callable
 import random
 import jinja2
+from os import path
 import numpy as np
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
@@ -14,6 +15,7 @@ import os
 
 class CommonService():
     def create_formulas(
+        self,
         exercise_parts: ExerciseParts,
         validater: Callable,
         needs_shuffle: bool = True
@@ -21,7 +23,7 @@ class CommonService():
         """
         計算式リストを作成する
         """
-    
+
         formulas: list[str] = []
         for left_num, right_num in product(exercise_parts.lefts, exercise_parts.rights):
             if (not validater(left_num, right_num)): continue
@@ -33,6 +35,7 @@ class CommonService():
 
     # 計算リストをPDFで出力する関数
     def export_exercise(
+        self,
         title: str,
         formulas: list[str]
         ) -> None:
@@ -61,12 +64,12 @@ class CommonService():
             "safebrowsing.enabled": True,
         })
         options.add_argument('--kiosk-printing')
-        options.add_argument('--headless')
+        #options.add_argument('--headless')
 
         # jinja2でtemplateを読み込む
-        # TODO: template.html周りははModel化する？
-        fsloader = jinja2.FileSystemLoader(searchpath='./templates')
-        env = jinja2.Environment(loader=fsloader)
+        # TODO: pathの指定周りはもう少し綺麗に書けそう。。
+        services_path = path.dirname(__file__)
+        env = jinja2.Environment(loader=jinja2.FileSystemLoader(f'{services_path}/../templates/'))
         template = env.get_template('template.html')
         MAX_COL = 4 # A4印刷だと4列がいい感じになる
         html = template.render({
@@ -76,8 +79,7 @@ class CommonService():
         })
 
         # TODO: chromedriverの存在チェック処理を入れる
-
-        with webdriver.Chrome("./chromedriver", options=options) as driver:
+        with webdriver.Chrome(f'{services_path}/../chromedriver', options=options) as driver:
             wait = WebDriverWait(driver, 15)
             driver.implicitly_wait(10)
 
