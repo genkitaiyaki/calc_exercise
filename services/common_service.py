@@ -64,7 +64,9 @@ class CommonService():
             "safebrowsing.enabled": True,
         })
         options.add_argument('--kiosk-printing')
-        options.add_argument('--headless')
+        
+        # TODO: headlessで実行する場合kiosk-printing設定が有効にならないため実行方法を再検討する必要がある
+        # options.add_argument('--headless')
 
         # jinja2でtemplateを読み込む
         # TODO: pathの指定周りはもう少し綺麗に書けそう。。
