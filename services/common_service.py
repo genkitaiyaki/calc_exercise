@@ -107,8 +107,11 @@ class CommonService():
     	    ,'formula_columns': np.array_split(formulas, MAX_COL) 
         })
 
-        # TODO: chromedriverの存在チェック処理を入れる
-        with webdriver.Chrome(f'{services_path}/../chromedriver', options=options) as driver:
+        chromedriver_path = f'{services_path}/../chromedriver'
+        if(not os.path.isfile(chromedriver_path)) :
+            print('ERROR! Unable to print. Because chromedriver not found.')
+            return
+        with webdriver.Chrome(chromedriver_path, options=options) as driver:
             wait = WebDriverWait(driver, 15)
             driver.implicitly_wait(10)
             driver.get("data:text/html;charset=utf-8," + html) # htmlの文字列をchrome上に表示する
