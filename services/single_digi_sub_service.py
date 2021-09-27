@@ -2,6 +2,12 @@ from services.base_calc_service import BaseCalcService
 from models.exercise_parts import ExerciseParts
 
 class SingleDigiSubService(BaseCalcService):
+    """１桁の引き算サービス
+    小学1年生向けの、繰り上がりが発生しない引き算を提供するためのサービス
+
+    Args:
+        BaseCalcService 
+    """
 
     def get_exercise_parts(self) -> ExerciseParts:
         return ExerciseParts(list(range(0,11)), list(range(0,11)), "-")
